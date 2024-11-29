@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio do Campeão - Nível Dificil</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('ronaldo.jpg'); /* Substitua 'seu-plano-de-fundo.jpg' pelo caminho da sua imagem */
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            padding: 375px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: rgba(0, 0, 0, 0.7); /* Fundo semitransparente */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        h1 {
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question h3 {
+            margin-bottom: 10px;
+        }
+        .question label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .question input {
+            margin-right: 10px;
+        }
+        .btn-next {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+            width: 100%;
+        }
+        .btn-next:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .btn-menu {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+            width: 100%;
+        }
+        .btn-menu:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Desafio do Campeão - Nível Dificil</h1>
+        <div id="quizContainer">
+            <!-- A pergunta será exibida aqui -->
+        </div>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "1. Qual seleção ganhou a primeira copa do mundo?",
+                options: {
+                    A: "Inglaterra",
+                    B: "França",
+                    C: "Brasil",
+                    D: "Uruguai"
+                },
+                answer: "D"  // Resposta correta
+            },
+            {
+                question: "2. Quem ganhou o Brasileirão de 2018",
+                options: {
+                    A: "Corinthians",
+                    B: "Palmeiras",
+                    C: "São Paulo",
+                    D: "Fluminense"
+                },
+                answer: "B"  // Resposta correta
+            },
+            {
+                question: "3. Quem foi o tecnico campeão da libertadores de 2023",
+                options: {
+                    A: "Tite",
+                    B: "Fernando DIniz",
+                    C: "Abel Ferreira",
+                    D: "Vitor Pereira"
+                },
+                answer: "B"  // Resposta correta
+            },
+            {
+                question: "4. Qual foi o resultado do jogo entre Brasil e Alemanha na copa de 2014?",
+                options: {
+                    A: "2 a 1",
+                    B: "1 a 1",
+                    C: "1 a 7",
+                    D: "2 a 7"
+                },
+                answer: "C"  // Resposta correta
+            },
+            {
+                question: "5. Quem fez o gol do Brasil em 2014 contra alemanha?",
+                options: {
+                    A: "Neymar",
+                    B: "Renato Augusto",
+                    C: "Oscar",
+                    D: "Felipão"
+                },
+                answer: "C"  // Resposta correta
+            },
+            {
+                question: "6. Qual tecnico ganhou a copa de 2002?",
+                options: {
+                    A: "Zagalo",
+                    B: "Felipão",
+                    C: "Tite",
+                    D: "Carlos parreira"
+                },
+                answer: "B"  // Resposta correta
+            },
+            {
+                question: "7. Quem é o maior campeão da libertadores feminina?",
+                options: {
+                    A: "Santos",
+                    B: "Ferroviaria",
+                    C: "Corinthians",
+                    D: "Palmeiras"
+                },
+                answer: "C"  // Resposta correta
+            },
+            {
+                question: "8. Quem fez os 2 gol do flamengo na final da libertadores de 2019",
+                options: {
+                    A: "Gabriel Barbosa",
+                    B: "Arrascaeta",
+                    C: "Rodrigo caio",
+                    D: "Bruno Henrique"
+                },
+                answer: "A"  // Resposta correta
+            },
+            {
+                question: "9. Em qual ano Cristiano Ronaldo ganhou sua primeira bola de ouro?",
+                options: {
+                    A: "2006",
+                    B: "2007",
+                    C: "2009",
+                    D: "2008"
+                },
+                answer: "D"  // Resposta correta
+            },
+            {
+                question: "10. Onde foi sediada a copa de 2018?",
+                options: {
+                    A: "Italia",
+                    B: "Russia",
+                    C: "Brasil",
+                    D: "França"
+                },
+                answer: "B"  // Resposta correta
+            },
+        ];
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            if (currentQuestionIndex < questions.length) {
+                const questionObj = questions[currentQuestionIndex];
+                const quizContainer = document.getElementById('quizContainer');
+
+                quizContainer.innerHTML = `
+                    <div class="question">
+                        <h3>${questionObj.question}</h3>
+                        <label><input type="radio" name="answer" value="A"> A) ${questionObj.options.A}</label>
+                        <label><input type="radio" name="answer" value="B"> B) ${questionObj.options.B}</label>
+                        <label><input type="radio" name="answer" value="C"> C) ${questionObj.options.C}</label>
+                        <label><input type="radio" name="answer" value="D"> D) ${questionObj.options.D}</label>
+                    </div>
+                    <button class="btn-next" onclick="submitAnswer()">Próxima</button>
+                `;
+            } else {
+                showResult();
+            }
+        }
+
+        function submitAnswer() {
+            const selectedOption = document.querySelector('input[name="answer"]:checked');
+            if (selectedOption) {
+                const answer = selectedOption.value;
+                if (answer === questions[currentQuestionIndex].answer) {
+                    score++;
+                }
+                currentQuestionIndex++;
+                loadQuestion();
+            } else {
+                alert("Por favor, selecione uma resposta antes de continuar.");
+            }
+        }
+
+        function showResult() {
+            const quizContainer = document.getElementById('quizContainer');
+            quizContainer.innerHTML = '';
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = `Você acertou ${score} de ${questions.length} perguntas.`;
+        
+
+          // Adiciona o botão "Menu"
+          const menuButton = document.createElement('button');
+            menuButton.classList.add('btn-menu');
+            menuButton.textContent = 'Menu';
+            menuButton.onclick = function() {
+                window.location.href = '../../Telainicial.html'; // Substitua pelo caminho da sua página inicial
+            };
+            resultDiv.appendChild(menuButton);
+        }
+
+        // Inicia o quiz carregando a primeira pergunta
+        loadQuestion();
+    </script>
+    
+</body>
+</html>

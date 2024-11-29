@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio do Campeão - Nível Médio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('kaka.jpg'); /* Substitua 'seu-plano-de-fundo.jpg' pelo caminho da sua imagem */
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            padding: 370px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: rgba(0, 0, 0, 0.7); /* Fundo semitransparente */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        h1 {
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question h3 {
+            margin-bottom: 10px;
+        }
+        .question label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .question input {
+            margin-right: 10px;
+        }
+        .btn-next {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+            width: 100%;
+        }
+        .btn-next {
+            background-color: #ff0000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+            width: 100%;
+        }
+        .btn-next:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .btn-menu {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+            width: 100%;
+        }
+        .btn-menu:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Desafio do Campeão - Nível Médio</h1>
+        <div id="quizContainer">
+            <!-- A pergunta será exibida aqui -->
+        </div>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "1. Quem foi o último brasileiro a ganhar uma Bola de Ouro?",
+                options: {
+                    A: "Ronaldo Fenômeno",
+                    B: "Ronaldinho Gaúcho",
+                    C: "Cristiano Ronaldo",
+                    D: "Kaká"
+                },
+                answer: "D"
+            },
+            {
+                question: "2. Qual seleção ganhou a Copa de 2010?",
+                options: {
+                    A: "Espanha",
+                    B: "Brasil",
+                    C: "Alemanha",
+                    D: "Argentina"
+                },
+                answer: "A"
+            },
+            {
+                question: "3. A quem pertence o estádio do Morumbi?",
+                options: {
+                    A: "São Paulo",
+                    B: "Santos",
+                    C: "Palmeiras",
+                    D: "Valencia"
+                },
+                answer: "A"
+            },
+            {
+                question: "4. Quem ganhou a Bola de Ouro em 2020?",
+                options: {
+                    A: "Benzema",
+                    B: "Messi",
+                    C: "Lewandowski",
+                    D: "Nenhuma das anteriores"
+                },
+                answer: "D"
+            },
+            {
+                question: "5. Por que não houve Bola de Ouro em 2020?",
+                options: {
+                    A: "Falta de verba",
+                    B: "Pandemia",
+                    C: "Reformulação da Bola de Ouro",
+                    D: "Guerras"
+                },
+                answer: "B"
+            },
+            {
+                question: "6. Qual dos gigantes de São Paulo foi rebaixado em 2023?",
+                options: {
+                    A: "Palmeiras",
+                    B: "Santos",
+                    C: "São Paulo",
+                    D: "Corinthians"
+                },
+                answer: "B"
+            },
+            {
+                question: "7. Qual time Ronaldo Fenômeno NÃO jogou?",
+                options: {
+                    A: "Flamengo",
+                    B: "PSV",
+                    C: "Corinthians",
+                    D: "Cruzeiro"
+                },
+                answer: "A"
+            },
+            {
+                question: "8. Quem fez o gol na final do Mundial de 2012?",
+                options: {
+                    A: "Torres (pelo Chelsea)",
+                    B: "David Luiz (pelo Chelsea)",
+                    C: "Guerrero (pelo Corinthians)",
+                    D: "Sheik (pelo Corinthians)"
+                },
+                answer: "C"
+            },
+            {
+                question: "9. Qual equipe sofreu um acidente aéreo em 2016?",
+                options: {
+                    A: "Santos",
+                    B: "Juventude",
+                    C: "Chapecoense",
+                    D: "Flamengo"
+                },
+                answer: "C"
+            },
+            {
+                question: "10. Qual desses jogadores já faleceu?",
+                options: {
+                    A: "Figo",
+                    B: "Pelé",
+                    C: "Neto",
+                    D: "Marcelinho Carioca"
+                },
+                answer: "B"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            if (currentQuestionIndex < questions.length) {
+                const questionObj = questions[currentQuestionIndex];
+                const quizContainer = document.getElementById('quizContainer');
+
+                quizContainer.innerHTML = `
+                    <div class="question">
+                        <h3>${questionObj.question}</h3>
+                        <label><input type="radio" name="answer" value="A"> A) ${questionObj.options.A}</label>
+                        <label><input type="radio" name="answer" value="B"> B) ${questionObj.options.B}</label>
+                        <label><input type="radio" name="answer" value="C"> C) ${questionObj.options.C}</label>
+                        <label><input type="radio" name="answer" value="D"> D) ${questionObj.options.D}</label>
+                    </div>
+                    <button class="btn-next" onclick="submitAnswer()">Próxima</button>
+                `;
+            } else {
+                showResult();
+            }
+        }
+
+        function submitAnswer() {
+            const selectedOption = document.querySelector('input[name="answer"]:checked');
+            if (selectedOption) {
+                const answer = selectedOption.value;
+                if (answer === questions[currentQuestionIndex].answer) {
+                    score++;
+                }
+                currentQuestionIndex++;
+                loadQuestion();
+            } else {
+                alert("Por favor, selecione uma resposta antes de continuar.");
+            }
+        }
+
+        function showResult() {
+            const quizContainer = document.getElementById('quizContainer');
+            quizContainer.innerHTML = '';
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = `Você acertou ${score} de ${questions.length} perguntas.`;
+
+        
+            const menuButton = document.createElement('button');
+            menuButton.classList.add('btn-menu');
+            menuButton.textContent = 'Menu';
+            menuButton.onclick = function () {
+                window.location.href = '../../Telainicial.html';  // Substitua pelo caminho da sua página inicial
+            };
+            resultDiv.appendChild(menuButton);
+        }
+
+        // Inicia o quiz carregando a primeira pergunta
+        loadQuestion();
+    </script>
+</body>
+</html>

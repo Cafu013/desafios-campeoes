@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio do Campeão - Nível Fácil</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('yuri.jpg'); /* Substitua 'seu-plano-de-fundo.jpg' pelo caminho da sua imagem */
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            padding: 370px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: rgba(0, 0, 0, 0.7); /* Fundo semitransparente */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        h1 {
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question h3 {
+            margin-bottom: 10px;
+        }
+        .question label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .question input {
+            margin-right: 10px;
+        }
+        .btn-next {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+            width: 100%;
+        }
+        .btn-next {
+            background-color: #ff0000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+            width: 100%;
+        }
+        .btn-next:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .btn-menu {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+            width: 100%;
+        }
+        .btn-menu:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Desafio do Campeão - Nível Fácil</h1>
+        <div id="quizContainer">
+            <!-- A pergunta será exibida aqui -->
+        </div>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "1. Quem ganhou a ultima copa do mundo em 2022",
+                options: {
+                    A: "França",
+                    B: "Alemanha",
+                    C: "Argentina",
+                    D: "Brasil"
+                },
+                answer: "C"  // Resposta correta
+            },
+            {
+                question: "2. A Vila Belmiro é o estadio de qual clube de futebol?",
+                options: {
+                    A: "Santos",
+                    B: "Flamengo",
+                    C: "Palmeiras",
+                    D: "Botafogo"
+                },
+                answer: "A"  // Resposta correta
+            },
+            {
+                question: "3. Quem é o maior campeão da bola de ouro?",
+                options: {
+                    A: "Pelé",
+                    B: "Cristiano Ronaldo",
+                    C: "Kaka",
+                    D: "Lionel Messi",
+                },
+                answer: "D"
+            },
+            {
+                question: "4. Quantos mundiais tem o time do Corinthians?",
+                options: {
+                    A: "1",
+                    B: "2",
+                    C: "3",
+                    D: "4",
+                },
+                answer: "B"
+            },
+            {
+                question: "5. Quem foi campeão Brasileiro de 2023",
+                options: {
+                    A: "Corinthians",
+                    B: "Santos",
+                    C: "Flamengo",
+                    D: "Palmeiras",
+                },
+                answer: "D"
+            },
+            {
+                question: "6. Quem foi o campeão da Liga dos Campeões da UEFA da temporada 23/24? ",
+                options: {
+                    A: "Valência",
+                    B: "Borussia Dortmund",
+                    C: "Real Madrid",
+                    D: "Barcelona",
+                },
+                answer: "C"
+            },
+            {
+                question: "7. Quem é o maior campeão do Paulistão?",
+                options: {
+                    A: "Palmeiras",
+                    B: "Santos",
+                    C: "Corinthians",
+                    D: "São Paulo",
+                },
+                answer: "C"
+            },
+            {
+                question: "8. Quem é conhecido como Imperador?",
+                options: {
+                    A: "Antonio",
+                    B: "Adriano",
+                    C: "Cezar",
+                    D: "Jacinto",
+                },
+                answer: "B"
+            },
+            {
+                question: "9. Qual time é conhecido pelo fato de não ter estadio?",
+                options: {
+                    A: "Flamengo",
+                    B: "Corinthians",
+                    C: "Santos",
+                    D: "Vasco",
+                },
+                answer: "A"
+            },
+            {
+                question: "10. Quem foi o tecnico do Brasil na copa de 2022",
+                options: {
+                    A: "Dorival Junior",
+                    B: "Fernando Diniz",
+                    C: "Tite",
+                    D: "Felipão",
+                },
+                answer: "C"
+            },
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            if (currentQuestionIndex < questions.length) {
+                const questionObj = questions[currentQuestionIndex];
+                const quizContainer = document.getElementById('quizContainer');
+
+                quizContainer.innerHTML = `
+                    <div class="question">
+                        <h3>${questionObj.question}</h3>
+                        <label><input type="radio" name="answer" value="A"> A) ${questionObj.options.A}</label>
+                        <label><input type="radio" name="answer" value="B"> B) ${questionObj.options.B}</label>
+                        <label><input type="radio" name="answer" value="C"> C) ${questionObj.options.C}</label>
+                        <label><input type="radio" name="answer" value="D"> D) ${questionObj.options.D}</label>
+                    </div>
+                    <button class="btn-next" onclick="submitAnswer()">Próxima</button>
+                `;
+            } else {
+                showResult();
+            }
+        }
+
+        function submitAnswer() {
+            const selectedOption = document.querySelector('input[name="answer"]:checked');
+            if (selectedOption) {
+                const answer = selectedOption.value;
+                if (answer === questions[currentQuestionIndex].answer) {
+                    score++;
+                }
+                currentQuestionIndex++;
+                loadQuestion();
+            } else {
+                alert("Por favor, selecione uma resposta antes de continuar.");
+            }
+        }
+
+        function showResult() {
+            const quizContainer = document.getElementById('quizContainer');
+            quizContainer.innerHTML = '';
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = `Você acertou ${score} de ${questions.length} perguntas.`;
+
+            // Adiciona o botão "Menu"
+            const menuButton = document.createElement('button');
+            menuButton.classList.add('btn-menu');
+            menuButton.textContent = 'Menu';
+            menuButton.onclick = function() {
+                window.location.href = '../../Telainicial.html'; // Substitua pelo caminho da sua página inicial
+            };
+            resultDiv.appendChild(menuButton);
+        }
+
+        // Inicia o quiz carregando a primeira pergunta
+        loadQuestion();
+    </script>
+
+</body>
+</html>

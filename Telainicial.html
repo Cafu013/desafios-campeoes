@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio do Campeão</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('Kauagostoso/menu.avif'); /* Substitua 'seu-plano-de-fundo.jpg' pelo caminho da sua imagem */
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            text-align: center;
+            padding: 410px;
+        }
+        h1 {
+            color: #FFD700; /* Cor do título */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7); /* Fundo semitransparente */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .difficulty-buttons {
+            margin: 20px 0;
+        }
+        .difficulty-buttons button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .difficulty-buttons button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Desafio do Campeão</h1>
+        <p>Escolha um modo de dificuldade para começar o quiz:</p>
+        <div class="difficulty-buttons">
+            <button onclick="startQuiz('facil')">Fácil</button>
+            <button onclick="startQuiz('medio')">Médio</button>
+            <button onclick="startQuiz('dificil')">Difícil</button>
+            <button onclick="startQuiz('expert')">Expert</button>
+        </div>
+    </div>
+
+    <script>
+        function startQuiz(dificuldade) {
+            // Redireciona para a página correspondente à dificuldade escolhida
+            window.location.href = 'Kauagostoso/' + dificuldade + '.html'; // Isso vai para 'facil.html', 'medio.html', etc.
+        }
+    </script>
+</body>
+
+        
+    </script>
+</body>
+</html>
